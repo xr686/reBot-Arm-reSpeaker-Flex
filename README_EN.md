@@ -141,53 +141,92 @@ graph TB
 
 ## 🚀 Quick Start
 
-### 1. Environment Setup
+### 1. Prerequisites
 
-Create a Conda environment with Python 3.10 and install required dependencies:
+- **OS**: Ubuntu 22.04 LTS (x86_64)
+- **Python**: 3.10
+- **Hardware**: reSpeaker Flex and reBot Arm connected via USB
+- **Network**: Internet access (for Groq API calls)
+
+### 2. Install Miniforge
+
+Miniforge supports Windows / Ubuntu / macOS / Jetson / Raspberry Pi:
 
 ```bash
-# Create conda environment
-conda create -n respeaker_arm python=3.10 -y
-conda activate respeaker_arm
-
-# Install core packages from conda-forge
-conda install -c conda-forge pyusb numpy scipy pinocchio casadi libusb
-
-# Install pip-only packages
-pip install groq edge-tts
+# Download and install Miniforge
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
 ```
 
-### 2. Groq API Key Configuration
-
-Set your Groq API key as an environment variable:
+### 3. Install System Dependencies & Set Serial Permissions
 
 ```bash
-export GROQ_API_KEY="your_groq_api_key_here"
+# Update packages and install ffmpeg
+sudo apt-get update && sudo apt-get install -y ffmpeg
+
+# Grant USB serial port permissions (no sudo required afterward)
+sudo chmod 666 /dev/ttyACM*
 ```
 
-> 💡 **Tip:** You can obtain a free Groq API key from [console.groq.com](https://console.groq.com/).
-
-### 3. USB Permissions (Linux)
-
-Grant USB access permissions for the reSpeaker device:
+### 4. Install uv (Fast Python Environment Tool)
 
 ```bash
-# Add udev rule for reSpeaker Flex
-sudo tee /etc/udev/rules.d/50-respeaker.rules << 'EOF'
-SUBSYSTEM=="usb", ATTR{idVendor}=="2886", ATTR{idProduct}=="0018", MODE="0666"
-EOF
-
-# Reload udev rules
-sudo udevadm control --reload-rules && sudo udevadm trigger
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 4. Running the Application
+### 5. Create Conda Environment via environment.yml
 
 ```bash
+# One-step environment creation with all dependencies (Conda + pip)
+conda env create -f environment.yml
+
+# Activate the environment
+conda activate flex
+```
+
+### 6. Clone Library, Sync Deps & Configure PYTHONPATH
+
+```bash
+git clone https://github.com/vectorBH6/reBotArm_control_py.git
+cd reBotArm_control_py
+uv sync
+export PYTHONPATH="$PWD:$PYTHONPATH"
+```
+
+> ⚠️ **Note**: `export PYTHONPATH` must be re-run after each terminal session.
+
+### 7. Configure Groq API Key
+
+```bash
+# Edit sound_tracking_arm.py and replace the api_key in VOICE_CFG with your actual key
+```
+
+> 💡 **Get API Key**: Sign up at [Groq Console](https://console.groq.com/keys) to create your API key.
+
+### 8. Network Proxy (If Required)
+
+```bash
+# Test connectivity to Groq
+ping console.groq.com
+
+# If unreachable, set proxy in VOICE_CFG inside sound_tracking_arm.py:
+# "proxy": "http://your-proxy-ip:port"   # e.g. "http://192.168.4.7:7897"
+```
+
+### 9. Test & Run
+
+```bash
+conda activate flex
+
+# 1. Verify pyusb and numpy
+python -c "import usb.core; import numpy; print('✅ pyusb + numpy OK')"
+
+# 2. Verify robot arm library (depends on PYTHONPATH)
+python -c "from reBotArm_control_py.actuator import RobotArm; print('✅ Robot Arm Library OK')"
+
+# 3. If both OK, run directly
 python sound_tracking_arm.py
 ```
-
-By default, the system starts in **DOA Sound Source Tracking Mode**. Press **`Enter`** at any time to switch to **Voice Command Control Mode**.
 
 ---
 
