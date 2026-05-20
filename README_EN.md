@@ -323,21 +323,6 @@ python sound_tracking_arm.py --verbose
 
 ---
 
-## 📁 Project Structure
-
-```
-reBot-Arm-reSpeaker-Flex/
-├── sound_tracking_arm.py     # 🎯 Main application — dual-mode control system
-├── README.md                  # 🇨🇳 中文文档
-├── README_EN.md               # 🇬🇧 English documentation (this file)
-├── requirements.txt           # Python dependencies
-├── LICENSE                    # MIT License
-└── assets/
-    ├── architecture.png       # System architecture diagram
-    ├── wiring_diagram.png     # Hardware wiring diagram
-    └── demo.gif               # Demo video/gif
-```
-
 ### Core Classes Overview
 
 | Class | Responsibility |
