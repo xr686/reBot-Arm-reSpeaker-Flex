@@ -169,7 +169,16 @@ wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforg
 bash Miniforge3-$(uname)-$(uname -m).sh
 ```
 
-### 3. 安装系统依赖并设置串口权限
+### 3. 通过 environment.yml 创建 Conda 环境
+
+```bash
+# 一键创建环境并自动安装所有依赖（包含 Conda 包和 pip 库）
+conda env create -f environment.yml
+
+# 激活环境
+conda activate flex
+```
+### 4. 安装系统依赖并设置串口权限
 
 ```bash
 # 更新系统包并安装 ffmpeg
@@ -179,21 +188,13 @@ sudo apt-get update && sudo apt-get install -y ffmpeg
 sudo chmod 666 /dev/ttyACM*
 ```
 
-### 4. 安装 uv（极速 Python 环境工具）
+### 5. 安装 uv（极速 Python 环境工具）
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 5. 通过 environment.yml 创建 Conda 环境
 
-```bash
-# 一键创建环境并自动安装所有依赖（包含 Conda 包和 pip 库）
-conda env create -f environment.yml
-
-# 激活环境
-conda activate flex
-```
 
 ### 6. 拉取代码库、同步 uv 依赖并配置环境变量
 
