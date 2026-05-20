@@ -108,7 +108,7 @@ graph TB
 
 | Component | Model | Description | Link |
 |-----------|-------|-------------|------|
-| Robotic Arm | **reBot Arm B601-DM** | 6-DOF robotic arm with MotorBridge controller | — |
+| Robotic Arm | **reBot Arm B601-DM** | 7-DOF robotic arm with MotorBridge controller | — |
 | Microphone Array | **reSpeaker Flex XVF3800** | 4-mic array with XIAO ESP32S3 + built-in DOA algorithm | [Seeed Studio](https://www.seeedstudio.com/ReSpeaker-FAB) |
 | Host PC | **Ubuntu 22.04** | x86_64 desktop or laptop with USB port | — |
 | Cables | USB-A to USB-C / Micro-USB | For reSpeaker and MotorBridge connection | — |
