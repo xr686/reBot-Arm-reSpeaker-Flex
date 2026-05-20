@@ -436,14 +436,14 @@ reBot-Arm-reSpeaker-Flex/
 ### 🧒 使用环境
 
 9. **儿童监护** —— 未成年人使用时需在成人监护下操作
-10. **安全距离** —— 机械臂运行时，请保持 30cm 以上的安全距离
+10. **安全距离** —— 机械臂运行时，请保持 1.5m 以上的安全距离
 
 ---
 
 ## 🛠️ 技术栈
 
 ### 硬件平台
-- [reBot Arm B601-DM](https://www.rebotix.com/) — 6 自由度桌面机械臂
+- [reBot Arm B601-DM](https://www.seeedstudio.com/reSpeaker-Flex-XVF3800-Circular-4-with-XIAO-ESP32S3-p-6739.html) — 7 自由度桌面机械臂
 - [reSpeaker Flex XVF3800](https://www.seeedstudio.com/ReSpeaker-USB-Mic-Array-p-4247.html) — 4 麦阵列
 
 ### Python 核心依赖
