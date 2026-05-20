@@ -158,7 +158,17 @@ wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforg
 bash Miniforge3-$(uname)-$(uname -m).sh
 ```
 
-### 3. Install System Dependencies & Set Serial Permissions
+### 3. Create Conda Environment via environment.yml
+
+```bash
+# One-step environment creation with all dependencies (Conda + pip)
+conda env create -f environment.yml
+
+# Activate the environment
+conda activate flex
+```
+
+### 4. Install System Dependencies & Set Serial Permissions
 
 ```bash
 # Update packages and install ffmpeg
@@ -168,21 +178,13 @@ sudo apt-get update && sudo apt-get install -y ffmpeg
 sudo chmod 666 /dev/ttyACM*
 ```
 
-### 4. Install uv (Fast Python Environment Tool)
+### 5. Install uv (Fast Python Environment Tool)
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 5. Create Conda Environment via environment.yml
 
-```bash
-# One-step environment creation with all dependencies (Conda + pip)
-conda env create -f environment.yml
-
-# Activate the environment
-conda activate flex
-```
 
 ### 6. Clone Library, Sync Deps & Configure PYTHONPATH
 
