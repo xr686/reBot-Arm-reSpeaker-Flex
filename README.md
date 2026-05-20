@@ -127,7 +127,7 @@ graph TB
 
 | 组件 | 型号 | 说明 | 参考链接 |
 |------|------|------|----------|
-| 机械臂 | reBot Arm B601-DM | 6 自由度桌面级机械臂 | [官网](https://www.rebotix.com/) |
+| 机械臂 | reBot Arm B601-DM | 7 自由度桌面级机械臂 | [官网](https://www.rebotix.com/) |
 | 麦克风阵列 | reSpeaker Flex XVF3800 | 4 麦阵列，集成 XIAO ESP32S3 | [Wiki](https://wiki.seeedstudio.com/reSpeaker_USB_Mic_Array/) |
 | 主控电脑 | Ubuntu 22.04 | x86_64 架构 | [下载](https://ubuntu.com/download/desktop) |
 | USB 线缆 | USB-A to USB-C ×2 | 数据+供电 | — |
