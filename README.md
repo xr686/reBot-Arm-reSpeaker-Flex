@@ -154,72 +154,92 @@ graph TB
 
 ### 1. 环境准备
 
-确保你的系统满足以下要求：
-
 - **操作系统**：Ubuntu 22.04 LTS (x86_64)
-- **Python 版本**：3.10（推荐通过 Conda 管理）
+- **Python 版本**：3.10
 - **硬件连接**：reSpeaker Flex 和 reBot Arm 均已通过 USB 连接到电脑
 - **网络**：可访问互联网（用于 Groq API 调用）
 
-### 2. 安装依赖
+### 2. 安装 Miniforge
 
-#### 2.1 创建 Conda 环境
+Miniforge 支持 Windows / Ubuntu / macOS / Jetson / 树莓派，推荐用于管理 Python 环境：
 
 ```bash
-# 创建 Python 3.10 环境
-conda create -n arm_voice python=3.10 -y
+# 下载并安装 Miniforge
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
+```
+
+### 3. 安装系统依赖并设置串口权限
+
+```bash
+# 更新系统包并安装 ffmpeg
+sudo apt-get update && sudo apt-get install -y ffmpeg
+
+# 设置串口权限（使当前用户无需 sudo 即可访问 USB 串口）
+sudo chmod 666 /dev/ttyACM*
+```
+
+### 4. 安装 uv（极速 Python 环境工具）
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 5. 通过 environment.yml 创建 Conda 环境
+
+```bash
+# 一键创建环境并自动安装所有依赖（包含 Conda 包和 pip 库）
+conda env create -f environment.yml
 
 # 激活环境
-conda activate arm_voice
+conda activate flex
 ```
 
-#### 2.2 安装系统依赖
+### 6. 拉取代码库、同步 uv 依赖并配置环境变量
 
 ```bash
-# 安装 libusb 和音频工具
-sudo apt update
-sudo apt install -y libusb-1.0-0-dev portaudio19-dev alsa-utils
+git clone https://github.com/vectorBH6/reBotArm_control_py.git
+cd reBotArm_control_py
+uv sync
+export PYTHONPATH="$PWD:$PYTHONPATH"
 ```
 
-#### 2.3 安装 Conda 科学计算包
+> ⚠️ **注意**：`export PYTHONPATH` 每次关闭终端后都需要重新执行。
+
+### 7. 配置 Groq API Key
 
 ```bash
-# 安装 pinocchio、casadi 等依赖
-conda install -c conda-forge pinocchio casadi libusb numpy scipy -y
+# 编辑 sound_tracking_arm.py，填入你的 Groq API Key
+# 定位到 VOICE_CFG 配置项，将 api_key 替换为你的实际 Key
 ```
 
-#### 2.4 安装 Python 包
+> 💡 **获取 API Key**：前往 [Groq 控制台](https://console.groq.com/keys) 注册账号并创建 API Key。
+
+### 8. 网络代理设置（如需要）
 
 ```bash
-# 安装 Python 依赖
-pip install pyusb groq edge-tts
+# 测试网络是否能正常访问 Groq
+ping console.groq.com
+
+# 如果无法访问，编辑 sound_tracking_arm.py 中的 VOICE_CFG，设置代理：
+# "proxy": "http://your-proxy-ip:port"   # 例如 "http://192.168.4.7:7897"
 ```
 
-### 3. 配置 Groq API
-
-在项目根目录创建 `.env` 文件：
+### 9. 测试效果
 
 ```bash
-echo "GROQ_API_KEY=your_groq_api_key_here" > .env
-```
+conda activate flex
 
-> 💡 **获取 API Key**：前往 [Groq 控制台](https://console.groq.com/keys) 注册并创建 API Key。
+# 1. 验证 pyusb 和 numpy
+python -c "import usb.core; import numpy; print('✅ pyusb + numpy OK')"
 
-### 4. 运行项目
+# 2. 验证机械臂库（依赖之前设置的 PYTHONPATH）
+python -c "from reBotArm_control_py.actuator import RobotArm; print('✅ Robot Arm Library OK')"
 
-```bash
-# 激活环境
-conda activate arm_voice
-
-# 运行主程序（默认启动 DOA 追踪模式）
+# 3. 如果上面两个都 OK，直接运行
 python sound_tracking_arm.py
-
-# 启动语音指令控制模式
-python sound_tracking_arm.py --mode voice
-
-# 查看所有可用参数
-python sound_tracking_arm.py --help
 ```
+
 
 ---
 
