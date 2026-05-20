@@ -379,28 +379,6 @@ python sound_tracking_arm.py --debug
 
 ---
 
-## 📁 项目结构
-
-```
-reBot-Arm-reSpeaker-Flex/
-├── 📄 sound_tracking_arm.py    # 主程序（包含所有核心类）
-├── 📄 README.md                # 中文文档（本文件）
-├── 📄 README_EN.md             # 英文文档
-├── 📄 .env.example             # 环境变量模板
-├── 📄 requirements.txt         # Python 依赖列表
-├── 📄 LICENSE                  # 开源许可证
-├── 📂 docs/                    # 详细文档
-│   ├── hardware_setup.md       # 硬件接线指南
-│   ├── api_reference.md        # API 参考文档
-│   └── troubleshooting.md      # 常见问题排查
-├── 📂 config/                  # 配置文件
-│   └── joint_limits.yaml       # 关节角度限制配置
-└── 📂 examples/                # 示例脚本
-    ├── doa_demo.py             # DOA 独立演示
-    ├── arm_basic.py            # 机械臂基础控制
-    └── voice_pipeline.py       # 语音管道测试
-```
-
 ### 核心类说明
 
 | 类名 | 文件 | 职责 |
