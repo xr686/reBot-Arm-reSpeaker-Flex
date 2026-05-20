@@ -338,18 +338,20 @@ python sound_tracking_arm.py --verbose
 
 > 🛡️ **Please read these safety guidelines carefully before operating the robotic arm.**
 
-### Joint Limits
+### Joint Limits (URDF Physical Constraints)
 
-The robotic arm has physical joint limits that **must not be exceeded** to prevent mechanical damage:
+All joints use radians (rad) in code; both radian and degree values are provided below. Home position is 0 for all joints.
 
-| Joint | Min Angle | Max Angle | Notes |
-|-------|-----------|-----------|-------|
-| Base (J1) | -90° | +90° | Horizontal rotation |
-| Shoulder (J2) | -45° | +45° | Vertical lift |
-| Elbow (J3) | -60° | +60° | Forearm extension |
-| Wrist (J4) | -90° | +90° | Wrist rotation |
-| Wrist Tilt (J5) | -45° | +45° | Wrist pitch |
-| Gripper (J6) | 0° | 90° | Gripper open/close |
+| Joint |      Name      | Min (rad) | Max (rad) | Min (deg) | Max (deg) |     Description    |
+| :---: | :------------: | :-------: | :-------: | :-------: | :-------: | :----------------: |
+|   J1  |  Base Rotation |    -2.6   |    +2.6   |  -149.0°  |  +149.0°  |   Horizontal yaw   |
+|   J2  | Shoulder Pitch |    -3.6   |    0.0    |  -206.3°  |     0°    |   Upper arm lift   |
+|   J3  |   Elbow Pitch  |    -3.6   |    0.0    |  -206.3°  |     0°    |  Forearm extension |
+|   J4  |   Wrist Roll   |    -1.5   |    +1.5   |   -85.9°  |   +85.9°  |  End-effector roll |
+|   J5  |   Wrist Pitch  |    -1.5   |    +1.5   |   -85.9°  |   +85.9°  | End-effector pitch |
+|   J6  |    Wrist Yaw   |    -1.5   |    +1.5   |   -85.9°  |   +85.9°  |  End-effector yaw  |
+|   J7  |     Gripper    |    -5.6   |    0.0    |  -320.9°  |     0°    | Gripper open/close |
+
 
 ### Operating Precautions
 
